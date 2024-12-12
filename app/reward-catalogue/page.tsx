@@ -4,15 +4,13 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '../../components/ui/select'
+} from '@/components/ui/select'
 import Link from 'next/link'
 
 export default function RewardCataloguePage() {
