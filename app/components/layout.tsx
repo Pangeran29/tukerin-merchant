@@ -1,8 +1,10 @@
-"use client";
+'use client'
 
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { LayoutDashboard, Gift, Coins, RefreshCw, Users } from 'lucide-react'
+import { usePathname, useRouter } from 'next/navigation'
+import { LayoutDashboard, Gift, Coins, RefreshCw, Users, LogOut } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 
 const navItems = [
   { icon: LayoutDashboard, label: 'Dashboard', href: '/' },
@@ -15,6 +17,26 @@ const navItems = [
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
+  const router = useRouter()
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+
+  useEffect(() => {
+    const authStatus = localStorage.getItem('isAuthenticated')
+    if (authStatus !== 'true') {
+      router.push('/login')
+    } else {
+      setIsAuthenticated(true)
+    }
+  }, [router])
+
+  const handleLogout = () => {
+    localStorage.removeItem('isAuthenticated')
+    router.push('/login')
+  }
+
+  if (!isAuthenticated) {
+    return null // or a loading spinner
+  }
 
   return (
     <div className="flex h-screen bg-white">
@@ -50,6 +72,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <div className="flex items-center">
               <Users className="w-8 h-8 text-[#FDDF23]" />
               <span className="ml-2 text-black">John Doe</span>
+              <Button
+                variant="ghost"
+                className="ml-4 text-black hover:bg-[#FDDF23]"
+                onClick={handleLogout}
+              >
+                <LogOut className="w-5 h-5 mr-2" />
+                Logout
+              </Button>
             </div>
           </div>
         </header>

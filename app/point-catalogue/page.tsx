@@ -12,6 +12,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Card, CardContent } from '@/components/ui/card'
+import Link from 'next/link'
 
 export default function PointCataloguePage() {
   return (
@@ -69,14 +70,16 @@ export default function PointCataloguePage() {
         {/* Point Catalogue Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {/* Add New Point Card */}
-          <Card className="border border-dashed border-[#FDDF23] bg-white hover:bg-gray-50 cursor-pointer">
-            <CardContent className="flex flex-col items-center justify-center h-full">
-              <div className="w-12 h-12 rounded-full bg-[#FDDF23] flex items-center justify-center mb-2">
-                <Plus className="w-6 h-6 text-black" />
-              </div>
-              <span className="text-black">Tambah Poin</span>
-            </CardContent>
-          </Card>
+          <Link href="/point-catalogue/add" className="block">
+            <Card className="border border-dashed border-[#FDDF23] bg-white hover:bg-gray-50 cursor-pointer">
+              <CardContent className="flex flex-col items-center justify-center p-4">
+                <div className="w-12 h-12 rounded-full bg-[#FDDF23] flex items-center justify-center mb-2">
+                  <Plus className="w-6 h-6 text-black" />
+                </div>
+                <span className="text-black">Tambah Poin</span>
+              </CardContent>
+            </Card>
+          </Link>
 
           {/* Point Cards */}
           {[
@@ -89,7 +92,7 @@ export default function PointCataloguePage() {
             { title: "Poin Sosial Media", description: "Bagikan pembelian Anda di sosial media", points: 10 },
           ].map((item, index) => (
             <Card key={index} className="border border-[#FDDF23] bg-white">
-              <CardContent className="p-4">
+              <CardContent className="p-4 h-full flex flex-col justify-between">
                 <h3 className="font-semibold text-black mb-2">{item.title}</h3>
                 <p className="text-sm text-gray-600 mb-4">{item.description}</p>
                 <div className="text-lg font-bold text-[#FDDF23]">{item.points} Poin</div>

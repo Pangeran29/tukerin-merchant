@@ -11,6 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import Link from 'next/link'
 
 export default function RewardCataloguePage() {
   return (
@@ -68,12 +69,14 @@ export default function RewardCataloguePage() {
         {/* Reward Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {/* Add New Reward Card */}
-          <div className="border border-dashed border-[#FDDF23] rounded-lg p-4 flex flex-col items-center justify-center h-[280px] cursor-pointer hover:bg-gray-50">
-            <div className="w-12 h-12 rounded-full bg-[#FDDF23] flex items-center justify-center mb-2">
-              <Plus className="w-6 h-6 text-black" />
+          <Link href="/reward-catalogue/add" className="block">
+            <div className="border border-dashed border-[#FDDF23] rounded-lg p-4 flex flex-col items-center justify-center aspect-square cursor-pointer hover:bg-gray-50">
+              <div className="w-12 h-12 rounded-full bg-[#FDDF23] flex items-center justify-center mb-2">
+                <Plus className="w-6 h-6 text-black" />
+              </div>
+              <span className="text-black">Tambah Hadiah</span>
             </div>
-            <span className="text-black">Tambah Hadiah</span>
-          </div>
+          </Link>
 
           {/* Reward Cards */}
           {Array.from({ length: 7 }).map((_, index) => (

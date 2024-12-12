@@ -1,4 +1,4 @@
-"use client";
+'use client'
 
 import { useState } from 'react'
 import Layout from '../components/layout'
@@ -22,13 +22,13 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 
-// Mock data for the table
+// Updated mock data to include reward type
 const rewardExchanges = [
-  { id: 1, reward: 'Voucher Discount 20%', customer: 'John Doe', points: 500, status: 'waiting approval' },
-  { id: 2, reward: 'Free Coffee', customer: 'Jane Smith', points: 300, status: 'processed' },
-  { id: 3, reward: 'Merchandise T-Shirt', customer: 'Bob Johnson', points: 1000, status: 'delivered' },
-  { id: 4, reward: 'Voucher Discount 10%', customer: 'Alice Brown', points: 200, status: 'received' },
-  { id: 5, reward: 'Free Pastry', customer: 'Charlie Davis', points: 150, status: 'waiting approval' },
+  { id: 1, reward: 'Voucher Discount 20%', customer: 'John Doe', points: 500, status: 'waiting approval', type: 'Voucher' },
+  { id: 2, reward: 'Free Coffee', customer: 'Jane Smith', points: 300, status: 'processed', type: 'Voucher' },
+  { id: 3, reward: 'Merchandise T-Shirt', customer: 'Bob Johnson', points: 1000, status: 'delivered', type: 'Physical Good' },
+  { id: 4, reward: 'Voucher Discount 10%', customer: 'Alice Brown', points: 200, status: 'received', type: 'Voucher' },
+  { id: 5, reward: 'Free Pastry', customer: 'Charlie Davis', points: 150, status: 'waiting approval', type: 'Physical Good' },
 ]
 
 export default function RewardExchangePage() {
@@ -78,6 +78,7 @@ export default function RewardExchangePage() {
                 <TableHead className="text-black">Customer</TableHead>
                 <TableHead className="text-black">Points</TableHead>
                 <TableHead className="text-black">Status</TableHead>
+                <TableHead className="text-black">Reward Type</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -96,6 +97,7 @@ export default function RewardExchangePage() {
                       {exchange.status.charAt(0).toUpperCase() + exchange.status.slice(1)}
                     </span>
                   </TableCell>
+                  <TableCell>{exchange.type}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -104,7 +106,7 @@ export default function RewardExchangePage() {
 
         {/* Pagination */}
         <div className="flex justify-between items-center mt-6">
-          <span className="text-sm text-gray-600">Showing 1-5 of 5 entries</span>
+          <span className="text-sm text-gray-600">Showing {filteredExchanges.length} of {rewardExchanges.length} entries</span>
           <div className="space-x-2">
             <Button 
               variant="outline" 
