@@ -34,7 +34,6 @@ export default function PointExchangePage() {
   return (
     <Layout>
       <div className="space-y-6">
-        <h1 className="text-2xl font-bold text-black">Point Exchange</h1>
 
         {/* Search */}
         <div className="relative w-full sm:w-96">

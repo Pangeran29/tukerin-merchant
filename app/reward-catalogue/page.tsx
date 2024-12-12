@@ -1,16 +1,18 @@
 import Layout from '../components/layout'
-import { Search, Plus, ChevronDown } from 'lucide-react'
+import { Search, Plus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select'
+} from '../../components/ui/select'
 import Link from 'next/link'
 
 export default function RewardCataloguePage() {
@@ -20,13 +22,13 @@ export default function RewardCataloguePage() {
         {/* Search and Filters */}
         <div className="space-y-4">
           <div className="relative">
-            <Input 
-              placeholder="Cari Hadiah" 
+            <Input
+              placeholder="Cari Hadiah"
               className="pl-10 bg-white border-[#FDDF23]"
             />
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
           </div>
-          
+
           <div className="flex flex-wrap gap-3">
             <Button variant="outline" className="border-[#FDDF23] hover:bg-[#FDDF23] hover:text-black">
               Pilih Periode
@@ -38,6 +40,7 @@ export default function RewardCataloguePage() {
               <SelectTrigger className="w-[180px] border-[#FDDF23]">
                 <SelectValue placeholder="Tipe Hadiah" />
               </SelectTrigger>
+              @typescript-eslint/no-unused-vars
               <SelectContent>
                 <SelectItem value="all">Semua Hadiah</SelectItem>
                 <SelectItem value="voucher">Voucher</SelectItem>
@@ -101,8 +104,8 @@ export default function RewardCataloguePage() {
         {/* Pagination */}
         <div className="flex justify-between items-center mt-6">
           <span className="text-sm text-gray-600">8 / 16</span>
-          <Button 
-            variant="outline" 
+          <Button
+            variant="outline"
             className="border-[#FDDF23] hover:bg-[#FDDF23] hover:text-black"
           >
             Next
