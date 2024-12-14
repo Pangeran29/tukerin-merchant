@@ -96,19 +96,6 @@ export default function PointCataloguePage() {
 
         {/* Point Catalogue Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {/* Add New Point Type Card */}
-          <Link href="/point-catalogue/add" className="block">
-            <Card className="border-2 border-dashed border-gray-300 hover:border-[#FDDF23] transition-colors duration-200">
-              <CardContent className="flex flex-col items-center justify-center h-full p-6">
-                <div className="w-16 h-16 rounded-full bg-[#FDDF23] flex items-center justify-center mb-4">
-                  <Plus className="w-8 h-8 text-black" />
-                </div>
-                <h3 className="text-lg font-semibold text-gray-900">Add New Point Type</h3>
-                <p className="text-sm text-gray-500 text-center mt-2">Create a new way for customers to earn points</p>
-              </CardContent>
-            </Card>
-          </Link>
-
           {/* Point Type Cards */}
           {pointTypes.map((pointType, index) => (
             <Card key={index} className="overflow-hidden hover:shadow-lg transition-shadow duration-200">
