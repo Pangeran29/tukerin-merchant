@@ -83,7 +83,7 @@ export default function CustomerPage() {
           </CardHeader>
           <CardContent>
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-              <div className="bg-blue-100 p-4 rounded-lg">
+              <div className="bg-blue-100 p-4 rounded-lg border">
                 <h3 className="text-lg font-semibold text-blue-800">Total Customers</h3>
                 <p className="text-3xl font-bold text-blue-600">{customers.length}</p>
               </div>
