@@ -1,3 +1,5 @@
+'use client'
+
 import { useState } from 'react'
 import Layout from '../components/layout'
 import { Search } from 'lucide-react'
@@ -44,8 +46,8 @@ export default function RewardExchangePage() {
         {/* Search and Filters */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-4">
           <div className="relative w-full sm:w-64">
-            <Input 
-              placeholder="Search rewards or customers" 
+            <Input
+              placeholder="Search rewards or customers"
               className="pl-10 bg-white border-[#FDDF23]"
             />
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
@@ -86,12 +88,11 @@ export default function RewardExchangePage() {
                   <TableCell>{exchange.customer}</TableCell>
                   <TableCell>{exchange.points}</TableCell>
                   <TableCell>
-                    <span className={`px-2 py-1 rounded-full text-xs font-semibold ${
-                      exchange.status === 'waiting approval' ? 'bg-yellow-200 text-yellow-800' :
-                      exchange.status === 'processed' ? 'bg-blue-200 text-blue-800' :
-                      exchange.status === 'delivered' ? 'bg-green-200 text-green-800' :
-                      'bg-gray-200 text-gray-800'
-                    }`}>
+                    <span className={`px-2 py-1 rounded-full text-xs font-semibold ${exchange.status === 'waiting approval' ? 'bg-yellow-200 text-yellow-800' :
+                        exchange.status === 'processed' ? 'bg-blue-200 text-blue-800' :
+                          exchange.status === 'delivered' ? 'bg-green-200 text-green-800' :
+                            'bg-gray-200 text-gray-800'
+                      }`}>
                       {exchange.status.charAt(0).toUpperCase() + exchange.status.slice(1)}
                     </span>
                   </TableCell>
@@ -106,15 +107,15 @@ export default function RewardExchangePage() {
         <div className="flex justify-between items-center mt-6">
           <span className="text-sm text-gray-600">Showing {filteredExchanges.length} of {rewardExchanges.length} entries</span>
           <div className="space-x-2">
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               className="border-[#FDDF23] hover:bg-[#FDDF23] hover:text-black"
               disabled
             >
               Previous
             </Button>
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               className="border-[#FDDF23] hover:bg-[#FDDF23] hover:text-black"
               disabled
             >
