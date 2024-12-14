@@ -36,7 +36,7 @@ export default function LoginPage() {
           <div className="flex justify-center mb-4">
             <div className="w-48 h-12 rounded-lg flex items-center justify-center">
               <Image
-                src="/tukerin.svg"
+                src="/tukerin.svg" 
                 alt="Tukerin Logo"
                 width={240}
                 height={80}
