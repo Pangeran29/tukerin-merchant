@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Layout from './components/layout'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Users, CreditCard, ArrowUpRight, CalendarIcon } from 'lucide-react'
+import { Users, CreditCard, ArrowUpRight, CalendarIcon, TrendingUp, ShoppingBag, Coffee } from 'lucide-react'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
 import { DateRange } from 'react-day-picker'
 import { addDays, format } from 'date-fns'
@@ -20,7 +20,8 @@ import {
 const cardData = {
   dailyStats: { customers: 150, pointsClaimed: 5000 },
   monthlyStats: { customers: 4500, pointsClaimed: 150000 },
-  returningCustomers: 75 // percentage
+  returningCustomers: 75, // percentage
+  totalSales: 12500, // in dollars
 }
 
 // Mock data for the charts
@@ -50,6 +51,7 @@ export default function DashboardPage() {
     <Layout>
       <div className="space-y-6">
         <div className="flex justify-between items-center">
+          <h1 className="text-3xl font-bold text-gray-900">Dashboard Overview</h1>
           <Popover>
             <PopoverTrigger asChild>
               <Button
@@ -89,14 +91,14 @@ export default function DashboardPage() {
         </div>
 
         {/* Top Section - Cards */}
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Daily Stats</CardTitle>
+              <CardTitle className="text-sm font-medium">Daily Customers</CardTitle>
               <Users className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{cardData.dailyStats.customers} Customers</div>
+              <div className="text-2xl font-bold">{cardData.dailyStats.customers}</div>
               <p className="text-xs text-muted-foreground">
                 {cardData.dailyStats.pointsClaimed} Points Claimed Today
               </p>
@@ -104,13 +106,13 @@ export default function DashboardPage() {
           </Card>
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Period Stats</CardTitle>
+              <CardTitle className="text-sm font-medium">Monthly Customers</CardTitle>
               <CreditCard className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{cardData.monthlyStats.customers} Customers</div>
+              <div className="text-2xl font-bold">{cardData.monthlyStats.customers}</div>
               <p className="text-xs text-muted-foreground">
-                {cardData.monthlyStats.pointsClaimed} Points Claimed This Period
+                {cardData.monthlyStats.pointsClaimed} Points Claimed This Month
               </p>
             </CardContent>
           </Card>
@@ -126,10 +128,22 @@ export default function DashboardPage() {
               </p>
             </CardContent>
           </Card>
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Total Sales</CardTitle>
+              <ShoppingBag className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">${cardData.totalSales.toLocaleString()}</div>
+              <p className="text-xs text-muted-foreground">
+                +15% from last month
+              </p>
+            </CardContent>
+          </Card>
         </div>
 
         {/* Middle Section - Charts */}
-        <div className="grid gap-4 md:grid-cols-2">
+        <div className="grid gap-6 md:grid-cols-2">
           <Card>
             <CardHeader>
               <CardTitle>Top 5 Claimed Points</CardTitle>
@@ -164,7 +178,32 @@ export default function DashboardPage() {
           </Card>
         </div>
 
-        {/* Bottom Section - You can add more content here if needed */}
+        {/* Bottom Section - Recent Activity */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Recent Activity</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              {[
+                { icon: Coffee, text: "John Doe claimed 'Free Coffee' reward", time: "5 minutes ago" },
+                { icon: Users, text: "New customer Sarah Smith joined the loyalty program", time: "1 hour ago" },
+                { icon: CreditCard, text: "Emily Johnson redeemed 500 points for a discount", time: "3 hours ago" },
+                { icon: TrendingUp, text: "Daily sales target reached", time: "5 hours ago" },
+              ].map((item, index) => (
+                <div key={index} className="flex items-center">
+                  <div className="w-9 h-9 rounded-full bg-[#FDDF23] flex items-center justify-center mr-3">
+                    <item.icon className="h-5 w-5 text-black" />
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-sm font-medium text-gray-900">{item.text}</p>
+                    <p className="text-xs text-gray-500">{item.time}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </Layout>
   )

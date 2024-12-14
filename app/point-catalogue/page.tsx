@@ -1,5 +1,5 @@
 import Layout from '../components/layout'
-import { Search, Plus } from 'lucide-react'
+import { Search, Plus, Filter } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -11,91 +11,115 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { Card, CardContent } from '@/components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import Link from 'next/link'
+
+const pointTypes = [
+  { icon: '🛍️', name: 'Purchase Points', description: 'Earn points for every purchase' },
+  { icon: '🎂', name: 'Birthday Bonus', description: 'Special points on your birthday' },
+  { icon: '👥', name: 'Referral Reward', description: 'Earn points by referring friends' },
+  { icon: '📝', name: 'Review Points', description: 'Get points for leaving reviews' },
+  { icon: '📅', name: 'Check-in Bonus', description: 'Earn points for regular visits' },
+  { icon: '🏆', name: 'Loyalty Milestone', description: 'Bonus points for loyal customers' },
+  { icon: '📱', name: 'App Download', description: 'One-time points for app download' },
+  { icon: '🎉', name: 'Special Event', description: 'Limited-time bonus point events' },
+]
 
 export default function PointCataloguePage() {
   return (
     <Layout>
       <div className="space-y-6">
-        {/* Search and Filters */}
-        <div className="space-y-4">
-          <div className="relative">
-            <Input 
-              placeholder="Cari Poin" 
-              className="pl-10 bg-white border-[#FDDF23]"
-            />
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-          </div>
-          
-          <div className="flex flex-wrap gap-3">
-            <Button variant="outline" className="border-[#FDDF23] hover:bg-[#FDDF23] hover:text-black">
-              Pilih Periode
+        <div className="flex justify-between items-center">
+          <h1 className="text-3xl font-bold text-gray-900">Point Catalogue</h1>
+          <Link href="/point-catalogue/add">
+            <Button className="bg-[#FDDF23] text-black hover:bg-[#FDDF23]/80">
+              <Plus className="w-5 h-5 mr-2" /> Add New Point Type
             </Button>
-            <Button variant="outline" className="border-[#FDDF23] hover:bg-[#FDDF23] hover:text-black">
-              Pilih Periode
-            </Button>
-            <Select>
-              <SelectTrigger className="w-[180px] border-[#FDDF23]">
-                <SelectValue placeholder="Tipe Poin" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">Semua Poin</SelectItem>
-                <SelectItem value="regular">Poin Reguler</SelectItem>
-                <SelectItem value="bonus">Poin Bonus</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div className="flex flex-wrap gap-6">
-            <div className="flex items-center space-x-2">
-              <Checkbox id="poin-aktif" />
-              <Label htmlFor="poin-aktif">Poin Aktif</Label>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Checkbox id="poin-kadaluarsa" />
-              <Label htmlFor="poin-kadaluarsa">Poin Kadaluarsa</Label>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Checkbox id="poin-draf" />
-              <Label htmlFor="poin-draf">Poin Draf</Label>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Checkbox id="poin-unggulan" />
-              <Label htmlFor="poin-unggulan">Poin Unggulan</Label>
-            </div>
-          </div>
+          </Link>
         </div>
 
+        <Card>
+          <CardHeader>
+            <CardTitle>Point System Overview</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+              <div className="bg-blue-100 p-4 rounded-lg">
+                <h3 className="text-lg font-semibold text-blue-800">Total Point Types</h3>
+                <p className="text-3xl font-bold text-blue-600">{pointTypes.length}</p>
+              </div>
+              <div className="bg-green-100 p-4 rounded-lg">
+                <h3 className="text-lg font-semibold text-green-800">Active Campaigns</h3>
+                <p className="text-3xl font-bold text-green-600">5</p>
+              </div>
+              <div className="bg-yellow-100 p-4 rounded-lg">
+                <h3 className="text-lg font-semibold text-yellow-800">Avg. Points/Customer</h3>
+                <p className="text-3xl font-bold text-yellow-600">250</p>
+              </div>
+              <div className="bg-purple-100 p-4 rounded-lg">
+                <h3 className="text-lg font-semibold text-purple-800">Total Points Issued</h3>
+                <p className="text-3xl font-bold text-purple-600">50,000</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Search and Filters */}
+        <Card>
+          <CardContent className="p-6">
+            <div className="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0 sm:space-x-4">
+              <div className="relative w-full sm:w-96">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <Input 
+                  placeholder="Search point types" 
+                  className="pl-10 bg-white border-gray-300"
+                />
+              </div>
+              <div className="flex space-x-2">
+                <Select>
+                  <SelectTrigger className="w-[150px] border-gray-300">
+                    <SelectValue placeholder="Status" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Status</SelectItem>
+                    <SelectItem value="active">Active</SelectItem>
+                    <SelectItem value="inactive">Inactive</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Button variant="outline" className="border-gray-300">
+                  <Filter className="w-4 h-4 mr-2" /> More Filters
+                </Button>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
         {/* Point Catalogue Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {/* Add New Point Card */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {/* Add New Point Type Card */}
           <Link href="/point-catalogue/add" className="block">
-            <Card className="border border-dashed border-[#FDDF23] bg-white hover:bg-gray-50 cursor-pointer">
-              <CardContent className="flex flex-col items-center justify-center p-4">
-                <div className="w-12 h-12 rounded-full bg-[#FDDF23] flex items-center justify-center mb-2">
-                  <Plus className="w-6 h-6 text-black" />
+            <Card className="border-2 border-dashed border-gray-300 hover:border-[#FDDF23] transition-colors duration-200">
+              <CardContent className="flex flex-col items-center justify-center h-full p-6">
+                <div className="w-16 h-16 rounded-full bg-[#FDDF23] flex items-center justify-center mb-4">
+                  <Plus className="w-8 h-8 text-black" />
                 </div>
-                <span className="text-black">Tambah Poin</span>
+                <h3 className="text-lg font-semibold text-gray-900">Add New Point Type</h3>
+                <p className="text-sm text-gray-500 text-center mt-2">Create a new way for customers to earn points</p>
               </CardContent>
             </Card>
           </Link>
 
-          {/* Point Cards */}
-          {[
-            { title: "Poin Belanja", description: "Dapatkan 1 poin untuk setiap pembelian Rp 10.000", points: 1 },
-            { title: "Poin Ulang Tahun", description: "Bonus poin spesial di bulan ulang tahun Anda", points: 100 },
-            { title: "Poin Referral", description: "Ajak teman dan dapatkan poin bonus", points: 50 },
-            { title: "Poin Review", description: "Berikan ulasan produk dan dapatkan poin", points: 5 },
-            { title: "Poin Check-in", description: "Check-in di toko kami dan kumpulkan poin", points: 2 },
-            { title: "Poin Loyalitas", description: "Poin bonus untuk pelanggan setia", points: 200 },
-            { title: "Poin Sosial Media", description: "Bagikan pembelian Anda di sosial media", points: 10 },
-          ].map((item, index) => (
-            <Card key={index} className="border border-[#FDDF23] bg-white">
-              <CardContent className="p-4 h-full flex flex-col justify-between">
-                <h3 className="font-semibold text-black mb-2">{item.title}</h3>
-                <p className="text-sm text-gray-600 mb-4">{item.description}</p>
-                <div className="text-lg font-bold text-[#FDDF23]">{item.points} Poin</div>
+          {/* Point Type Cards */}
+          {pointTypes.map((pointType, index) => (
+            <Card key={index} className="overflow-hidden hover:shadow-lg transition-shadow duration-200">
+              <CardContent className="p-6">
+                <div className="text-4xl mb-4">{pointType.icon}</div>
+                <h3 className="font-semibold text-lg text-gray-900 mb-2">{pointType.name}</h3>
+                <p className="text-sm text-gray-600 mb-4">{pointType.description}</p>
+                <div className="flex justify-between items-center">
+                  <span className="text-sm font-medium text-gray-500">Earn up to</span>
+                  <span className="text-2xl font-bold text-[#FDDF23]">{(index + 1) * 10} pts</span>
+                </div>
               </CardContent>
             </Card>
           ))}
@@ -103,13 +127,11 @@ export default function PointCataloguePage() {
 
         {/* Pagination */}
         <div className="flex justify-between items-center mt-6">
-          <span className="text-sm text-gray-600">1 / 3</span>
-          <Button 
-            variant="outline" 
-            className="border-[#FDDF23] hover:bg-[#FDDF23] hover:text-black"
-          >
-            Next
-          </Button>
+          <span className="text-sm text-gray-600">Showing all {pointTypes.length} point types</span>
+          <div className="space-x-2">
+            <Button variant="outline" disabled>Previous</Button>
+            <Button variant="outline" disabled>Next</Button>
+          </div>
         </div>
       </div>
     </Layout>

@@ -1,5 +1,3 @@
-'use client'
-
 import { useState } from 'react'
 import Layout from '../components/layout'
 import { Search } from 'lucide-react'
@@ -41,7 +39,7 @@ export default function RewardExchangePage() {
   return (
     <Layout>
       <div className="space-y-6">
-        {/* <h1 className="text-2xl font-bold text-black">Reward Exchange</h1> */}
+        <h1 className="text-2xl font-bold text-black">Reward Exchange</h1>
 
         {/* Search and Filters */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-4">
