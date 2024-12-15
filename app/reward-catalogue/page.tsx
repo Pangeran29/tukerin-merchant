@@ -109,7 +109,9 @@ export default function RewardCataloguePage() {
                 </p>
                 <div className="flex justify-between items-center">
                   <span className="text-2xl font-bold text-[#FDDF23]">{(index + 1) * 100} pts</span>
-                  <Button variant="outline" size="sm">View Details</Button>
+                  <Link href={`/reward-catalogue/${index + 1}`}>
+                    <Button variant="outline" size="sm">View Details</Button>
+                  </Link>
                 </div>
               </CardContent>
             </Card>
