@@ -108,7 +108,7 @@ export default function RewardCataloguePage() {
                   Short description of the reward. This is a brief explanation of what the customer will receive.
                 </p>
                 <div className="flex justify-between items-center">
-                  <span className="text-2xl font-bold text-[#FDDF23]">{(index + 1) * 100} pts</span>
+                  <span className="text-xl font-bold text-gray-600" >{(index + 1) * 100} pts</span>
                   <Link href={`/reward-catalogue/${index + 1}`}>
                     <Button variant="outline" size="sm">View Details</Button>
                   </Link>

@@ -44,21 +44,21 @@ export default function PointCataloguePage() {
           </CardHeader>
           <CardContent>
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-              <div className="bg-blue-100 p-4 rounded-lg">
-                <h3 className="text-lg font-semibold text-blue-800">Total Point Types</h3>
-                <p className="text-3xl font-bold text-blue-600">{pointTypes.length}</p>
+              <div className="bg-blue-100 p-4 rounded-lg shadow-md">
+                <h3 className="text-lg text-gray-800">Total Point Types</h3>
+                <p className="text-3xl font-semibold text-gray-800">{pointTypes.length}</p>
               </div>
-              <div className="bg-green-100 p-4 rounded-lg">
-                <h3 className="text-lg font-semibold text-green-800">Active Campaigns</h3>
-                <p className="text-3xl font-bold text-green-600">5</p>
+              <div className="bg-green-100 p-4 rounded-lg shadow-md">
+                <h3 className="text-lg text-gray-800">Active Campaigns</h3>
+                <p className="text-3xl font-semibold">5</p>
               </div>
-              <div className="bg-yellow-100 p-4 rounded-lg">
-                <h3 className="text-lg font-semibold text-yellow-800">Avg. Points/Customer</h3>
-                <p className="text-3xl font-bold text-yellow-600">250</p>
+              <div className="bg-yellow-100 p-4 rounded-lg shadow-md">
+                <h3 className="text-lg text-gray-800">Avg. Points/Customer</h3>
+                <p className="text-3xl font-semibold" >250</p>
               </div>
-              <div className="bg-purple-100 p-4 rounded-lg">
-                <h3 className="text-lg font-semibold text-purple-800">Total Points Issued</h3>
-                <p className="text-3xl font-bold text-purple-600">50,000</p>
+              <div className="bg-purple-100 p-4 rounded-lg shadow-md">
+                <h3 className="text-lg text-gray-800">Total Points Issued</h3>
+                <p className="text-3xl font-semibold">50,000</p>
               </div>
             </div>
           </CardContent>
@@ -103,9 +103,9 @@ export default function PointCataloguePage() {
                 <div className="text-4xl mb-4">{pointType.icon}</div>
                 <h3 className="font-semibold text-lg text-gray-900 mb-2">{pointType.name}</h3>
                 <p className="text-sm text-gray-600 mb-4">{pointType.description}</p>
-                <div className="flex justify-between items-center">
+                <div className="flex flex-col justify-between items-start">
                   <span className="text-sm font-medium text-gray-500">Earn up to</span>
-                  <span className="text-2xl font-bold text-[#FDDF23]">{pointType.id * 10} pts</span>
+                  <span className="text-xl font-bold text-gray-600">{pointType.id * 10} pts</span>
                 </div>
                 <Link href={`/point-catalogue/${pointType.id}`}>
                   <Button variant="outline" size="sm" className="w-full mt-4">View Details</Button>
