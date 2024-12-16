@@ -28,113 +28,55 @@ import {
   Ticket,
 } from "lucide-react";
 
-// Enhanced mock data for point catalogue
-const pointCatalogue = [
+const pointTypes = [
   {
     id: 1,
     name: "Pembelian Kopi",
-    points: 50,
+    points: 45,
     description: "Dapatkan poin untuk setiap pembelian kopi",
     icon: Coffee,
-    category: "Minuman",
+    category: "Transaksi",
     expiryDays: 30,
     color: "bg-amber-100",
   },
-  {
-    id: 2,
-    name: "Paket Makan Siang",
-    points: 100,
-    description: "Poin ganda untuk menu makan siang",
-    icon: Utensils,
-    category: "Makanan",
-    expiryDays: 14,
-    color: "bg-green-100",
-  },
+
   {
     id: 3,
+    name: "Hadiah Referral",
+    points: 85,
+    description: "Dapatkan poin dengan mengajak teman",
+    icon: UserPlus,
+    category: "Referral",
+    expiryDays: 60,
+    color: "bg-blue-100",
+  },
+  {
+    id: 4,
+    name: "Paket Makan Siang",
+    points: 35,
+    description: "Poin ganda untuk menu makan siang",
+    icon: Utensils,
+    category: "Feedback",
+    expiryDays: 30,
+    color: "bg-green-100",
+  },
+
+  {
+    id: 6,
     name: "Bonus Loyalitas",
     points: 200,
     description: "Bonus bulanan untuk pelanggan setia",
     icon: Gift,
-    category: "Hadiah",
-    expiryDays: 60,
-    color: "bg-purple-100",
-  },
-  {
-    id: 4,
-    name: "Hadiah Referral",
-    points: 150,
-    description: "Poin untuk mereferensikan pelanggan baru",
-    icon: UserPlus,
-    category: "Referral",
+    category: "Loyalitas",
     expiryDays: 90,
-    color: "bg-blue-100",
-  },
-];
-
-const pointTypes = [
-  {
-    id: 1,
-    icon: "🛍️",
-    name: "Poin Pembelian",
-    description: "Dapatkan poin untuk setiap pembelian",
-    points: 45,
-  },
-  {
-    id: 2,
-    icon: "🎂",
-    name: "Bonus Ulang Tahun",
-    description: "Poin spesial di hari ulang tahun Anda",
-    points: 125,
-  },
-  {
-    id: 3,
-    icon: "👥",
-    name: "Hadiah Referral",
-    description: "Dapatkan poin dengan mengajak teman",
-    points: 85,
-  },
-  {
-    id: 4,
-    icon: "📝",
-    name: "Poin Ulasan",
-    description: "Dapatkan poin untuk memberikan ulasan",
-    points: 35,
-  },
-  {
-    id: 5,
-    icon: "📅",
-    name: "Bonus Check-in",
-    description: "Dapatkan poin untuk kunjungan rutin",
-    points: 45,
-  },
-  {
-    id: 6,
-    icon: "🏆",
-    name: "Pencapaian Loyalitas",
-    description: "Bonus poin untuk pelanggan setia",
-    points: 200,
-  },
-  {
-    id: 7,
-    icon: "📱",
-    name: "Unduh Aplikasi",
-    description: "Poin sekali untuk mengunduh aplikasi",
-    points: 75,
-  },
-  {
-    id: 8,
-    icon: "🎉",
-    name: "Acara Khusus",
-    description: "Event poin bonus waktu terbatas",
-    points: 150,
+    color: "bg-yellow-100",
   },
 ];
 
 // Mock reward data
 const mockReward = {
   title: "Voucher Kopi Gratis",
-  image: "/placeholder.svg?height=200&width=200",
+  image: "/coffee-voucher.svg",
   description: "Nikmati kopi pilihan Anda gratis!",
   points: 100,
   termsAndConditions:
@@ -236,7 +178,7 @@ export default function CashierPage() {
           </div>
         </div>
 
-        <div className="mb-6 rounded-lg bg-white p-4 shadow-md sm:mb-8 sm:p-6">
+        <div className="mb-6 rounded-lg bg-white p-4 shadow sm:mb-8 sm:p-6">
           <h2 className="mb-3 text-xl font-semibold text-gray-900 sm:mb-4 sm:text-2xl">
             Ikhtisar Sistem Poin
           </h2>
@@ -299,7 +241,7 @@ export default function CashierPage() {
                   }}
                 >
                   <div className="mb-4 flex w-full justify-between text-4xl">
-                    <span>{item.icon}</span>
+                    <item.icon className="h-8 w-8 opacity-75" />
                     <Checkbox
                       checked={selectedPoints.includes(item.id)}
                       onCheckedChange={() => {}}
@@ -366,7 +308,7 @@ export default function CashierPage() {
         </Dialog>
 
         <Dialog open={showRewardDetails} onOpenChange={setShowRewardDetails}>
-          <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[425px]">
+          <DialogContent className="max-h-[90vh] overflow-y-auto bg-white sm:max-w-[425px]">
             <DialogHeader>
               <DialogTitle className="mb-4 text-center text-xl font-bold sm:text-2xl">
                 Detail Hadiah
@@ -388,12 +330,12 @@ export default function CashierPage() {
               <p className="mb-4 text-center text-sm text-gray-600 sm:text-base">
                 {mockReward.description}
               </p>
-              <div className="mb-4 rounded-full bg-secondary p-2">
+              <div className="mb-4 rounded-full bg-secondary px-4 py-2">
                 <span className="text-base font-bold sm:text-lg">
                   {mockReward.points} Poin
                 </span>
               </div>
-              <div className="w-full rounded-lg bg-gray-100 p-4">
+              <div className="w-full rounded-lg bg-gray-200 p-4">
                 <h4 className="mb-2 text-sm font-semibold sm:text-base">
                   Syarat dan Ketentuan:
                 </h4>
@@ -512,7 +454,7 @@ export default function CashierPage() {
                       Kirim Poin
                     </Button>
                   ) : (
-                    <div className="mb-4 text-center">
+                    <div className="mt-4 text-center">
                       <CheckCircle className="mx-auto mb-2 h-6 w-6 text-green-500 sm:h-8 sm:w-8" />
                       <p className="text-sm font-semibold text-green-600 sm:text-base">
                         Poin berhasil dikirim!
