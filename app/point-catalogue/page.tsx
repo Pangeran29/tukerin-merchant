@@ -15,14 +15,15 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import Link from 'next/link'
 
 const pointTypes = [
-  { id: 1, icon: '🛍️', name: 'Purchase Points', description:'Earn points for every purchase' },
+  { id: 1, icon: '🛍️', name: 'Purchase Points', description: 'Earn points for every Rp. 100,000 purchase' },
   { id: 2, icon: '🎂', name: 'Birthday Bonus', description: 'Special points on your birthday' },
-  { id: 3, icon: '👥', name: 'Referral Reward', description: 'Earn points by referring friends' },
+  // { id: 3, icon: '👥', name: 'Referral Reward', description: 'Earn points by referring friends' },
   { id: 4, icon: '📝', name: 'Review Points', description: 'Get points for leaving reviews' },
-  { id: 5, icon: '📅', name: 'Check-in Bonus', description: 'Earn points for regular visits' },
-  { id: 6, icon: '🏆', name: 'Loyalty Milestone', description: 'Bonus points for loyal customers' },
-  { id: 7, icon: '📱', name: 'App Download', description: 'One-time points for app download' },
+  // { id: 5, icon: '📅', name: 'Check-in Bonus', description: 'Earn points for regular visits' },
+  // { id: 6, icon: '🏆', name: 'Loyalty Milestone', description: 'Bonus points for loyal customers' },
+  // { id: 7, icon: '📱', name: 'App Download', description: 'One-time points for app download' },
   { id: 8, icon: '🎉', name: 'Special Event', description: 'Limited-time bonus point events' },
+  { id: 9, icon: '🍜', name: 'Special Menu', description: 'Try our newest korean noodle to get more points' },
 ]
 
 export default function PointCataloguePage() {
@@ -70,8 +71,8 @@ export default function PointCataloguePage() {
             <div className="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0 sm:space-x-4">
               <div className="relative w-full sm:w-96">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                <Input 
-                  placeholder="Search point types" 
+                <Input
+                  placeholder="Search point types"
                   className="pl-10 bg-white border-gray-300"
                 />
               </div>
@@ -80,7 +81,7 @@ export default function PointCataloguePage() {
                   <SelectTrigger className="w-[150px] border-gray-300">
                     <SelectValue placeholder="Point Type" />
                   </SelectTrigger>
-                <SelectContent className='bg-[#FBFBFB]'>
+                  <SelectContent className='bg-[#FBFBFB]'>
                     <SelectItem value="all" className='hover:bg-[#FDDF23]/80'>By Price</SelectItem>
                     <SelectItem value="active" className='hover:bg-[#FDDF23]/80'>By Menu Item</SelectItem>
                     <SelectItem value="inactive" className='hover:bg-[#FDDF23]/80'>By Customer</SelectItem>
