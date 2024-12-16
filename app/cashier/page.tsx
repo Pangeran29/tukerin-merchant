@@ -19,7 +19,6 @@ import {
   Utensils,
   Gift,
   UserPlus,
-  Clock,
   Calendar,
   Zap,
   AlertCircle,
@@ -79,48 +78,56 @@ const pointTypes = [
     icon: "🛍️",
     name: "Poin Pembelian",
     description: "Dapatkan poin untuk setiap pembelian",
+    points: 45,
   },
   {
     id: 2,
     icon: "🎂",
     name: "Bonus Ulang Tahun",
     description: "Poin spesial di hari ulang tahun Anda",
+    points: 125,
   },
   {
     id: 3,
     icon: "👥",
     name: "Hadiah Referral",
     description: "Dapatkan poin dengan mengajak teman",
+    points: 85,
   },
   {
     id: 4,
     icon: "📝",
     name: "Poin Ulasan",
     description: "Dapatkan poin untuk memberikan ulasan",
+    points: 35,
   },
   {
     id: 5,
     icon: "📅",
     name: "Bonus Check-in",
     description: "Dapatkan poin untuk kunjungan rutin",
+    points: 45,
   },
   {
     id: 6,
     icon: "🏆",
     name: "Pencapaian Loyalitas",
     description: "Bonus poin untuk pelanggan setia",
+    points: 200,
   },
   {
     id: 7,
     icon: "📱",
     name: "Unduh Aplikasi",
     description: "Poin sekali untuk mengunduh aplikasi",
+    points: 75,
   },
   {
     id: 8,
     icon: "🎉",
     name: "Acara Khusus",
     description: "Event poin bonus waktu terbatas",
+    points: 150,
   },
 ];
 
@@ -193,7 +200,7 @@ export default function CashierPage() {
   };
 
   const totalPoints = selectedPoints.reduce(
-    (sum, id) => sum + pointCatalogue.find((item) => item.id === id)!.points,
+    (sum, id) => sum + pointTypes.find((item) => item.id === id)!.points,
     0,
   );
 
@@ -286,7 +293,7 @@ export default function CashierPage() {
                 } overflow-hidden transition-all duration-200 ease-in-out hover:shadow-lg`}
               >
                 <CardContent
-                  className="p-6"
+                  className="cursor-pointer p-6"
                   onClick={() => {
                     handlePointSelection(item.id);
                   }}
@@ -310,7 +317,7 @@ export default function CashierPage() {
                       Dapatkan hingga
                     </span>
                     <span className="text-xl font-bold text-gray-600">
-                      {(index + 1) * 10} poin
+                      {item.points} poin
                     </span>
                   </div>
                 </CardContent>
@@ -411,7 +418,7 @@ export default function CashierPage() {
               disabled={selectedPoints.length === 0}
               onClick={handleProcess}
             >
-              Proses ({selectedPoints.length})
+              Proses {selectedPoints.length}
             </Button>
           </DialogTrigger>
           <DialogContent className="bg-white sm:max-w-[425px]">
@@ -432,7 +439,8 @@ export default function CashierPage() {
                     </p>
                   </div>
                   <p className="mb-6 text-center text-sm sm:text-base">
-                    Bagus! Anda akan memberikan hadiah kepada pelanggan. Bagaimana cara Anda ingin mengirim poin?
+                    Bagus! Anda akan memberikan hadiah kepada pelanggan.
+                    Bagaimana cara Anda ingin mengirim poin?
                   </p>
                   <div className="grid grid-cols-2 gap-4">
                     <Button
@@ -458,7 +466,7 @@ export default function CashierPage() {
             {selectedOption === "qr" && showQR && (
               <div className="flex h-full flex-col items-center justify-center">
                 <Image
-                  src="/placeholder.svg?height=200&width=200"
+                  src="/qr.svg"
                   alt="Kode QR"
                   width={200}
                   height={200}
@@ -471,7 +479,7 @@ export default function CashierPage() {
                   onClick={handleFinish}
                   className="bg-secondary text-text hover:bg-tertiary"
                 >
-                  <CheckCircle className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
+                  <CheckCircle className="mr-1 h-4 w-4 sm:h-5 sm:w-5" />
                   Selesai
                 </Button>
               </div>
@@ -493,30 +501,25 @@ export default function CashierPage() {
                   onChange={(e) => setPhoneNumber(e.target.value)}
                   className="mb-4"
                 />
-                {!pointsSent ? (
-                  <Button
-                    onClick={handleSendPoints}
-                    className="mb-2 bg-secondary text-text hover:bg-tertiary"
-                    disabled={!phoneNumber}
-                  >
-                    <Send className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
-                    Kirim Poin
-                  </Button>
-                ) : (
-                  <div className="mb-4 text-center">
-                    <CheckCircle className="mx-auto mb-2 h-6 w-6 text-green-500 sm:h-8 sm:w-8" />
-                    <p className="text-sm font-semibold text-green-600 sm:text-base">
-                      Poin berhasil dikirim!
-                    </p>
-                  </div>
-                )}
-                <Button
-                  onClick={handleFinish}
-                  className="bg-secondary text-text hover:bg-tertiary"
-                  disabled={!pointsSent}
-                >
-                  Selesai
-                </Button>
+                <div className="flex w-full justify-center">
+                  {!pointsSent ? (
+                    <Button
+                      onClick={handleSendPoints}
+                      className="mb-2 bg-secondary text-text hover:bg-tertiary"
+                      disabled={!phoneNumber}
+                    >
+                      <Send className="mr-1 h-4 w-4 sm:h-5 sm:w-5" />
+                      Kirim Poin
+                    </Button>
+                  ) : (
+                    <div className="mb-4 text-center">
+                      <CheckCircle className="mx-auto mb-2 h-6 w-6 text-green-500 sm:h-8 sm:w-8" />
+                      <p className="text-sm font-semibold text-green-600 sm:text-base">
+                        Poin berhasil dikirim!
+                      </p>
+                    </div>
+                  )}
+                </div>
               </div>
             )}
           </DialogContent>
