@@ -183,10 +183,6 @@ export default function RewardDetailPage({ params }: { params: { id: string } })
                         <RadioGroupItem value="voucher" id="voucher" />
                         <Label htmlFor="voucher">Voucher</Label>
                       </div>
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="experience" id="experience" />
-                        <Label htmlFor="experience">Experience</Label>
-                      </div>
                     </RadioGroup>
                   </div>
 
@@ -225,7 +221,7 @@ export default function RewardDetailPage({ params }: { params: { id: string } })
                 <CardContent className="space-y-4">
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <Label htmlFor="maxDaily">Max Daily Redeem</Label>
+                      <Label htmlFor="maxDaily">Max Weekly Redeem</Label>
                       <Input
                         id="maxDaily"
                         name="maxDaily"

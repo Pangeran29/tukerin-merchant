@@ -78,17 +78,14 @@ export default function PointCataloguePage() {
               <div className="flex space-x-2">
                 <Select>
                   <SelectTrigger className="w-[150px] border-gray-300">
-                    <SelectValue placeholder="Status" />
+                    <SelectValue placeholder="Point Type" />
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Status</SelectItem>
-                    <SelectItem value="active">Active</SelectItem>
-                    <SelectItem value="inactive">Inactive</SelectItem>
+                <SelectContent className='bg-[#FBFBFB]'>
+                    <SelectItem value="all" className='hover:bg-[#FDDF23]/80'>By Price</SelectItem>
+                    <SelectItem value="active" className='hover:bg-[#FDDF23]/80'>By Menu Item</SelectItem>
+                    <SelectItem value="inactive" className='hover:bg-[#FDDF23]/80'>By Customer</SelectItem>
                   </SelectContent>
                 </Select>
-                <Button variant="outline" className="border-gray-300">
-                  <Filter className="w-4 h-4 mr-2" /> More Filters
-                </Button>
               </div>
             </div>
           </CardContent>
