@@ -242,7 +242,7 @@ export default function CashierPage() {
           </h2>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-6">
             <div className="flex items-center">
-              <Calendar className="mr-2 h-6 w-6 text-[#FDDF23] sm:mr-3 sm:h-8 sm:w-8" />
+              <Calendar className="mr-3 h-6 w-6 text-[#FDDF23] sm:mr-36 sm:h-8 sm:w-8" />
               <div>
                 <h3 className="text-sm font-semibold sm:text-base">
                   Hadiah Harian
@@ -253,7 +253,7 @@ export default function CashierPage() {
               </div>
             </div>
             <div className="flex items-center">
-              <Zap className="mr-2 h-6 w-6 text-[#FDDF23] sm:mr-3 sm:h-8 sm:w-8" />
+              <Zap className="mr-3 h-6 w-6 text-[#FDDF23] sm:mr-6 sm:h-8 sm:w-8" />
               <div>
                 <h3 className="text-sm font-semibold sm:text-base">
                   Penukaran Instan
@@ -264,7 +264,7 @@ export default function CashierPage() {
               </div>
             </div>
             <div className="flex items-center">
-              <AlertCircle className="mr-2 h-6 w-6 text-[#FDDF23] sm:mr-3 sm:h-8 sm:w-8" />
+              <AlertCircle className="mr-3 h-6 w-6 text-[#FDDF23] sm:mr-6 sm:h-8 sm:w-8" />
               <div>
                 <h3 className="text-sm font-semibold sm:text-base">
                   Pengingat Kadaluarsa
