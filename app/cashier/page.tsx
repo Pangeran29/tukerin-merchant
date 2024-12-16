@@ -1,288 +1,404 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Checkbox } from '@/components/ui/checkbox'
+import { useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import Image from 'next/image'
-import { Coffee, Utensils, Gift, UserPlus, Clock, Calendar, Zap, AlertCircle, QrCode, Send, CheckCircle, Ticket } from 'lucide-react'
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import Image from "next/image";
+import {
+  Coffee,
+  Utensils,
+  Gift,
+  UserPlus,
+  Clock,
+  Calendar,
+  Zap,
+  AlertCircle,
+  QrCode,
+  Send,
+  CheckCircle,
+  Ticket,
+} from "lucide-react";
 
 // Enhanced mock data for point catalogue
 const pointCatalogue = [
-  { 
-    id: 1, 
-    name: 'Coffee Purchase', 
-    points: 50, 
-    description: 'Earn points for every coffee purchase', 
+  {
+    id: 1,
+    name: "Pembelian Kopi",
+    points: 50,
+    description: "Dapatkan poin untuk setiap pembelian kopi",
     icon: Coffee,
-    category: 'Beverages',
+    category: "Minuman",
     expiryDays: 30,
-    color: 'bg-amber-100'
+    color: "bg-amber-100",
   },
-  { 
-    id: 2, 
-    name: 'Lunch Special', 
-    points: 100, 
-    description: 'Double points for lunch menu items', 
+  {
+    id: 2,
+    name: "Paket Makan Siang",
+    points: 100,
+    description: "Poin ganda untuk menu makan siang",
     icon: Utensils,
-    category: 'Food',
+    category: "Makanan",
     expiryDays: 14,
-    color: 'bg-green-100'
+    color: "bg-green-100",
   },
-  { 
-    id: 3, 
-    name: 'Loyalty Bonus', 
-    points: 200, 
-    description: 'Monthly bonus for loyal customers', 
+  {
+    id: 3,
+    name: "Bonus Loyalitas",
+    points: 200,
+    description: "Bonus bulanan untuk pelanggan setia",
     icon: Gift,
-    category: 'Rewards',
+    category: "Hadiah",
     expiryDays: 60,
-    color: 'bg-purple-100'
+    color: "bg-purple-100",
   },
-  { 
-    id: 4, 
-    name: 'Referral Reward', 
-    points: 150, 
-    description: 'Points for referring a new customer', 
+  {
+    id: 4,
+    name: "Hadiah Referral",
+    points: 150,
+    description: "Poin untuk mereferensikan pelanggan baru",
     icon: UserPlus,
-    category: 'Referral',
+    category: "Referral",
     expiryDays: 90,
-    color: 'bg-blue-100'
+    color: "bg-blue-100",
   },
-]
+];
+
+const pointTypes = [
+  {
+    id: 1,
+    icon: "🛍️",
+    name: "Poin Pembelian",
+    description: "Dapatkan poin untuk setiap pembelian",
+  },
+  {
+    id: 2,
+    icon: "🎂",
+    name: "Bonus Ulang Tahun",
+    description: "Poin spesial di hari ulang tahun Anda",
+  },
+  {
+    id: 3,
+    icon: "👥",
+    name: "Hadiah Referral",
+    description: "Dapatkan poin dengan mengajak teman",
+  },
+  {
+    id: 4,
+    icon: "📝",
+    name: "Poin Ulasan",
+    description: "Dapatkan poin untuk memberikan ulasan",
+  },
+  {
+    id: 5,
+    icon: "📅",
+    name: "Bonus Check-in",
+    description: "Dapatkan poin untuk kunjungan rutin",
+  },
+  {
+    id: 6,
+    icon: "🏆",
+    name: "Pencapaian Loyalitas",
+    description: "Bonus poin untuk pelanggan setia",
+  },
+  {
+    id: 7,
+    icon: "📱",
+    name: "Unduh Aplikasi",
+    description: "Poin sekali untuk mengunduh aplikasi",
+  },
+  {
+    id: 8,
+    icon: "🎉",
+    name: "Acara Khusus",
+    description: "Event poin bonus waktu terbatas",
+  },
+];
 
 // Mock reward data
 const mockReward = {
-  title: "Free Coffee Voucher",
+  title: "Voucher Kopi Gratis",
   image: "/placeholder.svg?height=200&width=200",
-  description: "Enjoy a free coffee of your choice!",
+  description: "Nikmati kopi pilihan Anda gratis!",
   points: 100,
-  termsAndConditions: "Valid for one standard coffee. Cannot be combined with other offers. Expires in 30 days.",
-}
+  termsAndConditions:
+    "Berlaku untuk satu kopi standar. Tidak dapat digabung dengan penawaran lain. Berlaku 30 hari.",
+};
 
 export default function CashierPage() {
-  const [selectedPoints, setSelectedPoints] = useState<number[]>([])
-  const [isProcessing, setIsProcessing] = useState(false)
-  const [showQR, setShowQR] = useState(false)
-  const [selectedOption, setSelectedOption] = useState<'qr' | 'whatsapp' | null>(null)
-  const [phoneNumber, setPhoneNumber] = useState('')
-  const [pointsSent, setPointsSent] = useState(false)
-  const [isRedeemingReward, setIsRedeemingReward] = useState(false)
-  const [voucherCode, setVoucherCode] = useState('')
-  const [showRewardDetails, setShowRewardDetails] = useState(false)
+  const [selectedPoints, setSelectedPoints] = useState<number[]>([]);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [showQR, setShowQR] = useState(false);
+  const [selectedOption, setSelectedOption] = useState<
+    "qr" | "whatsapp" | null
+  >(null);
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [pointsSent, setPointsSent] = useState(false);
+  const [isRedeemingReward, setIsRedeemingReward] = useState(false);
+  const [voucherCode, setVoucherCode] = useState("");
+  const [showRewardDetails, setShowRewardDetails] = useState(false);
 
   const handlePointSelection = (pointId: number) => {
-    setSelectedPoints(prev => 
-      prev.includes(pointId) 
-        ? prev.filter(id => id !== pointId)
-        : [...prev, pointId]
-    )
-  }
+    setSelectedPoints((prev) =>
+      prev.includes(pointId)
+        ? prev.filter((id) => id !== pointId)
+        : [...prev, pointId],
+    );
+  };
 
   const handleProcess = () => {
-    setIsProcessing(true)
-    setSelectedOption(null)
-  }
+    setIsProcessing(true);
+    setSelectedOption(null);
+  };
 
-  const handleOptionSelect = (option: 'qr' | 'whatsapp') => {
-    setSelectedOption(option)
-    if (option === 'qr') {
-      setShowQR(true)
+  const handleOptionSelect = (option: "qr" | "whatsapp") => {
+    setSelectedOption(option);
+    if (option === "qr") {
+      setShowQR(true);
     }
-  }
+  };
 
   const handleFinish = () => {
-    setSelectedPoints([])
-    setIsProcessing(false)
-    setShowQR(false)
-    setSelectedOption(null)
-    setPhoneNumber('')
-    setPointsSent(false)
-  }
+    setSelectedPoints([]);
+    setIsProcessing(false);
+    setShowQR(false);
+    setSelectedOption(null);
+    setPhoneNumber("");
+    setPointsSent(false);
+  };
 
   const handleSendPoints = () => {
-    console.log(`Sending ${totalPoints} points to ${phoneNumber}`)
-    setPointsSent(true)
-  }
+    console.log(`Mengirim ${totalPoints} poin ke ${phoneNumber}`);
+    setPointsSent(true);
+  };
 
   const handleRedeemReward = () => {
-    setIsRedeemingReward(true)
-  }
+    setIsRedeemingReward(true);
+  };
 
   const handleSubmitVoucherCode = () => {
     // Here you would typically validate the voucher code
     // For this example, we'll just show the reward details
-    setIsRedeemingReward(false)
-    setShowRewardDetails(true)
-  }
+    setIsRedeemingReward(false);
+    setShowRewardDetails(true);
+  };
 
-  const totalPoints = selectedPoints.reduce((sum, id) => 
-    sum + pointCatalogue.find(item => item.id === id)!.points, 0
-  )
+  const totalPoints = selectedPoints.reduce(
+    (sum, id) => sum + pointCatalogue.find((item) => item.id === id)!.points,
+    0,
+  );
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 pb-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
+      <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 sm:py-8 lg:px-8">
         <div className="mb-4 sm:mb-8">
-          <h1 className="text-2xl sm:text-4xl font-bold text-gray-900 mb-2">Cashier Dashboard</h1>
-          <p className="text-base sm:text-xl text-gray-600">Welcome to Makmur Jaya Coffee Roaster's point management system</p>
+          <h1 className="mb-2 text-2xl font-bold text-gray-900 sm:text-4xl">
+            Dashboard Kasir
+          </h1>
+          <p className="text-base text-gray-600 sm:text-xl">
+            Selamat datang di sistem manajemen poin Sip n Sup
+          </p>
         </div>
 
-        <div className="w-full mb-6 sm:mb-12 rounded-lg overflow-hidden shadow-lg relative">
+        <div className="relative mb-6 w-full overflow-hidden rounded-lg shadow-lg sm:mb-12">
           <Image
-            src="/placeholder.svg?height=400&width=1200"
-            alt="Makmur Jaya Coffee Roaster Banner"
+            src="/sipnsup.jpeg?height=400&width=1200"
+            alt="Banner Sip n Sup"
             width={1200}
             height={400}
-            className="w-full h-[150px] sm:h-[300px] object-cover"
+            className="h-[150px] w-full object-cover sm:h-[300px]"
           />
-          <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+          <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
             <div className="text-center text-white">
-              <h2 className="text-xl sm:text-3xl font-bold mb-1 sm:mb-2">Reward Your Customers</h2>
-              <p className="text-sm sm:text-xl">Build loyalty with our point system</p>
+              <h2 className="mb-1 text-xl font-bold sm:mb-2 sm:text-3xl">
+                Berikan Hadiah ke Pelanggan
+              </h2>
+              <p className="text-sm sm:text-xl">
+                Bangun loyalitas dengan sistem poin kami
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="mb-6 rounded-lg bg-white p-4 shadow-md sm:mb-8 sm:p-6">
+          <h2 className="mb-3 text-xl font-semibold text-gray-900 sm:mb-4 sm:text-2xl">
+            Ikhtisar Sistem Poin
+          </h2>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-6">
+            <div className="flex items-center">
+              <Calendar className="mr-2 h-6 w-6 text-[#FDDF23] sm:mr-3 sm:h-8 sm:w-8" />
+              <div>
+                <h3 className="text-sm font-semibold sm:text-base">
+                  Hadiah Harian
+                </h3>
+                <p className="text-xs text-gray-600 sm:text-sm">
+                  Dorong kunjungan harian
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center">
+              <Zap className="mr-2 h-6 w-6 text-[#FDDF23] sm:mr-3 sm:h-8 sm:w-8" />
+              <div>
+                <h3 className="text-sm font-semibold sm:text-base">
+                  Penukaran Instan
+                </h3>
+                <p className="text-xs text-gray-600 sm:text-sm">
+                  Penggunaan poin cepat dan mudah
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center">
+              <AlertCircle className="mr-2 h-6 w-6 text-[#FDDF23] sm:mr-3 sm:h-8 sm:w-8" />
+              <div>
+                <h3 className="text-sm font-semibold sm:text-base">
+                  Pengingat Kadaluarsa
+                </h3>
+                <p className="text-xs text-gray-600 sm:text-sm">
+                  Beritahu pelanggan sebelum poin kadaluarsa
+                </p>
+              </div>
             </div>
           </div>
         </div>
 
         <div className="mb-6 sm:mb-8">
-          <h2 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-3 sm:mb-4">Available Point Catalogues</h2>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
-            {pointCatalogue.map((item) => {
-              const Icon = item.icon
-              return (
-                <Card 
-                  key={item.id} 
-                  className={`${
-                    selectedPoints.includes(item.id) 
-                      ? 'border-[#FDDF23] bg-[#FDDF23]/10' 
-                      : `border-gray-200 ${item.color}`
-                  } transition-all duration-200 ease-in-out hover:shadow-lg`}
-                >
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 p-2 sm:p-4">
-                    <CardTitle className="text-sm sm:text-xl font-bold">{item.name}</CardTitle>
-                    <Icon className="h-4 w-4 sm:h-6 sm:w-6 text-gray-600" />
-                  </CardHeader>
-                  <CardContent 
-                    className="cursor-pointer p-2 sm:p-4"
-                    onClick={() => handlePointSelection(item.id)}
-                  >
-                    <div className="flex items-center justify-between mb-1 sm:mb-2">
-                      <span className="text-xs sm:text-sm font-medium text-gray-500">{item.category}</span>
-                      <Checkbox
-                        checked={selectedPoints.includes(item.id)}
-                        onCheckedChange={() => {}}
-                        onClick={(e) => e.stopPropagation()}
-                      />
-                    </div>
-                    <p className="text-xs sm:text-sm text-gray-600 mb-2 sm:mb-4 line-clamp-2">{item.description}</p>
-                    <div className="flex justify-between items-center">
-                      <span className="text-lg sm:text-2xl font-bold text-[#FDDF23]">{item.points}</span>
-                      <div className="flex items-center text-xs sm:text-sm text-gray-500">
-                        <Clock className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
-                        <span>Expires in {item.expiryDays} days</span>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              )
-            })}
-          </div>
-        </div>
+          <h2 className="mb-3 text-xl font-semibold text-gray-900 sm:mb-4 sm:text-2xl">
+            Katalog Poin Tersedia
+          </h2>
 
-        <div className="bg-white p-4 sm:p-6 rounded-lg shadow-md mb-6 sm:mb-8">
-          <h2 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-3 sm:mb-4">Point System Overview</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
-            <div className="flex items-center">
-              <Calendar className="w-6 h-6 sm:w-8 sm:h-8 text-[#FDDF23] mr-2 sm:mr-3" />
-              <div>
-                <h3 className="font-semibold text-sm sm:text-base">Daily Rewards</h3>
-                <p className="text-xs sm:text-sm text-gray-600">Encourage daily visits</p>
-              </div>
-            </div>
-            <div className="flex items-center">
-              <Zap className="w-6 h-6 sm:w-8 sm:h-8 text-[#FDDF23] mr-2 sm:mr-3" />
-              <div>
-                <h3 className="font-semibold text-sm sm:text-base">Instant Redemption</h3>
-                <p className="text-xs sm:text-sm text-gray-600">Quick and easy point use</p>
-              </div>
-            </div>
-            <div className="flex items-center">
-              <AlertCircle className="w-6 h-6 sm:w-8 sm:h-8 text-[#FDDF23] mr-2 sm:mr-3" />
-              <div>
-                <h3 className="font-semibold text-sm sm:text-base">Expiry Reminders</h3>
-                <p className="text-xs sm:text-sm text-gray-600">Notify customers before points expire</p>
-              </div>
-            </div>
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {pointTypes.map((item, index) => (
+              <Card
+                key={index}
+                className={`${
+                  selectedPoints.includes(item.id)
+                    ? "border-primary bg-gray-200"
+                    : `border-gray-200`
+                } overflow-hidden transition-all duration-200 ease-in-out hover:shadow-lg`}
+              >
+                <CardContent
+                  className="p-6"
+                  onClick={() => {
+                    handlePointSelection(item.id);
+                  }}
+                >
+                  <div className="mb-4 flex w-full justify-between text-4xl">
+                    <span>{item.icon}</span>
+                    <Checkbox
+                      checked={selectedPoints.includes(item.id)}
+                      onCheckedChange={() => {}}
+                      onClick={(e) => e.stopPropagation()}
+                    />
+                  </div>
+                  <h3 className="mb-2 text-lg font-semibold text-gray-900">
+                    {item.name}
+                  </h3>
+                  <p className="mb-4 text-sm text-gray-600">
+                    {item.description}
+                  </p>
+                  <div className="flex flex-col items-start justify-between">
+                    <span className="text-sm font-medium text-gray-500">
+                      Dapatkan hingga
+                    </span>
+                    <span className="text-xl font-bold text-gray-600">
+                      {(index + 1) * 10} poin
+                    </span>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </div>
       </div>
 
-      <div className="fixed bottom-4 right-4 left-4 z-10 flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4 sm:bottom-8 sm:left-auto">
+      <div className="fixed bottom-4 left-4 right-4 z-10 flex flex-col space-y-2 sm:bottom-8 sm:left-auto sm:flex-row sm:space-x-4 sm:space-y-0">
         <Dialog open={isRedeemingReward} onOpenChange={setIsRedeemingReward}>
           <DialogTrigger asChild>
-            <Button 
-              className="bg-blue-600 text-white hover:bg-blue-700 px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-lg font-semibold rounded-full shadow-lg w-full sm:w-auto"
+            <Button
+              className="w-full rounded-full bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-lg hover:bg-blue-700 sm:w-auto sm:px-6 sm:py-3 sm:text-lg"
               onClick={handleRedeemReward}
             >
-              <Ticket className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-              Redeem Reward
+              <Ticket className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
+              Tukar Hadiah
             </Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px]">
+          <DialogContent className="bg-white sm:max-w-[425px]">
             <DialogHeader>
-              <DialogTitle className="text-xl sm:text-2xl font-bold text-center mb-4">Redeem Reward</DialogTitle>
+              <DialogTitle className="mb-4 text-center text-xl font-bold sm:text-2xl">
+                Tukar Hadiah
+              </DialogTitle>
             </DialogHeader>
             <div className="mt-4">
-              <Label htmlFor="voucherCode" className="text-sm font-medium mb-2">Enter Voucher Code</Label>
+              <Label htmlFor="voucherCode" className="mb-2 text-sm font-medium">
+                Masukkan Kode Voucher
+              </Label>
               <Input
                 id="voucherCode"
                 value={voucherCode}
                 onChange={(e) => setVoucherCode(e.target.value)}
                 className="mb-4"
-                placeholder="e.g. COFFEE123"
+                placeholder="contoh: COFFEE123"
               />
-              <Button 
+              <Button
                 onClick={handleSubmitVoucherCode}
                 className="w-full bg-secondary text-text hover:bg-tertiary"
               >
-                Validate Code
+                Validasi Kode
               </Button>
             </div>
           </DialogContent>
         </Dialog>
 
         <Dialog open={showRewardDetails} onOpenChange={setShowRewardDetails}>
-          <DialogContent className="sm:max-w-[425px] max-h-[90vh] overflow-y-auto">
+          <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[425px]">
             <DialogHeader>
-              <DialogTitle className="text-xl sm:text-2xl font-bold text-center mb-4">Reward Details</DialogTitle>
+              <DialogTitle className="mb-4 text-center text-xl font-bold sm:text-2xl">
+                Detail Hadiah
+              </DialogTitle>
             </DialogHeader>
             <div className="mt-4 flex flex-col items-center">
-              <div className="w-full max-w-[200px] aspect-square relative mb-4">
-                <Image src={mockReward.image} alt={mockReward.title} layout="fill" objectFit="cover" className="rounded-lg" />
+              <div className="relative mb-4 aspect-square w-full max-w-[200px]">
+                <Image
+                  src={mockReward.image}
+                  alt={mockReward.title}
+                  layout="fill"
+                  objectFit="cover"
+                  className="rounded-lg"
+                />
               </div>
-              <h3 className="text-lg sm:text-xl font-semibold mb-2 text-center">{mockReward.title}</h3>
-              <p className="text-sm sm:text-base text-gray-600 mb-4 text-center">{mockReward.description}</p>
-              <div className="bg-secondary p-2 rounded-full mb-4">
-                <span className="text-base sm:text-lg font-bold">{mockReward.points} Points</span>
+              <h3 className="mb-2 text-center text-lg font-semibold sm:text-xl">
+                {mockReward.title}
+              </h3>
+              <p className="mb-4 text-center text-sm text-gray-600 sm:text-base">
+                {mockReward.description}
+              </p>
+              <div className="mb-4 rounded-full bg-secondary p-2">
+                <span className="text-base font-bold sm:text-lg">
+                  {mockReward.points} Poin
+                </span>
               </div>
-              <div className="bg-gray-100 p-4 rounded-lg w-full">
-                <h4 className="font-semibold mb-2 text-sm sm:text-base">Terms and Conditions:</h4>
-                <p className="text-xs sm:text-sm text-gray-600">{mockReward.termsAndConditions}</p>
+              <div className="w-full rounded-lg bg-gray-100 p-4">
+                <h4 className="mb-2 text-sm font-semibold sm:text-base">
+                  Syarat dan Ketentuan:
+                </h4>
+                <p className="text-xs text-gray-600 sm:text-sm">
+                  {mockReward.termsAndConditions}
+                </p>
               </div>
-              <Button 
+              <Button
                 onClick={() => setShowRewardDetails(false)}
-                className="mt-6 bg-secondary text-text hover:bg-tertiary w-full sm:w-auto"
+                className="mt-6 w-full bg-secondary text-text hover:bg-tertiary sm:w-auto"
               >
-                Close
+                Tutup
               </Button>
             </div>
           </DialogContent>
@@ -290,92 +406,116 @@ export default function CashierPage() {
 
         <Dialog open={isProcessing} onOpenChange={setIsProcessing}>
           <DialogTrigger asChild>
-            <Button 
-              className="bg-blue-600 text-white hover:bg-blue-700 px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-lg font-semibold rounded-full shadow-lg w-full sm:w-auto"
+            <Button
+              className="w-full rounded-full bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-lg hover:bg-blue-700 sm:w-auto sm:px-6 sm:py-3 sm:text-lg"
               disabled={selectedPoints.length === 0}
               onClick={handleProcess}
             >
-              Process ({selectedPoints.length})
+              Proses ({selectedPoints.length})
             </Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px]">
+          <DialogContent className="bg-white sm:max-w-[425px]">
             {!selectedOption && (
               <>
                 <DialogHeader>
-                  <DialogTitle className="text-xl sm:text-2xl font-bold text-center mb-4">Process Points</DialogTitle>
+                  <DialogTitle className="mb-4 text-center text-xl font-bold sm:text-2xl">
+                    Proses Poin
+                  </DialogTitle>
                 </DialogHeader>
                 <div className="mt-4">
-                  <div className="bg-secondary p-4 rounded-lg mb-6">
-                    <p className="text-base sm:text-lg font-semibold text-center">Total Points to Process</p>
-                    <p className="text-2xl sm:text-4xl font-bold text-center">{totalPoints}</p>
+                  <div className="mb-6 rounded-lg bg-secondary p-4">
+                    <p className="text-center text-base font-semibold sm:text-lg">
+                      Total Poin untuk Diproses
+                    </p>
+                    <p className="text-center text-2xl font-bold sm:text-4xl">
+                      {totalPoints}
+                    </p>
                   </div>
-                  <p className="text-sm sm:text-base text-center mb-6">Great job! You're about to reward your customer. How would you like to send the points?</p>
+                  <p className="mb-6 text-center text-sm sm:text-base">
+                    Bagus! Anda akan memberikan hadiah kepada pelanggan. Bagaimana cara Anda ingin mengirim poin?
+                  </p>
                   <div className="grid grid-cols-2 gap-4">
-                    <Button 
-                      onClick={() => handleOptionSelect('qr')}
-                      className="bg-white border-2 border-secondary text-text hover:bg-secondary/10 flex flex-col items-center py-2 sm:py-4"
+                    <Button
+                      onClick={() => handleOptionSelect("qr")}
+                      className="flex items-center border-2 border-secondary bg-white text-text hover:bg-secondary/10"
                     >
-                      <QrCode className="w-6 h-6 sm:w-8 sm:h-8 mb-2" />
-                      <span className="text-xs sm:text-sm">Generate QR</span>
+                      <QrCode className="h-6 w-6 sm:h-8 sm:w-8" />
+                      <span className="text-xs sm:text-sm">Buat QR</span>
                     </Button>
-                    <Button 
-                      onClick={() => handleOptionSelect('whatsapp')}
-                      className="bg-white border-2 border-secondary text-text hover:bg-secondary/10 flex flex-col items-center py-2 sm:py-4"
+                    <Button
+                      onClick={() => handleOptionSelect("whatsapp")}
+                      className="flex items-center border-2 border-secondary bg-white text-text hover:bg-secondary/10"
                     >
-                      <Send className="w-6 h-6 sm:w-8 sm:h-8 mb-2" />
-                      <span className="text-xs sm:text-sm">Send to WhatsApp</span>
+                      <Send className="h-6 w-6 sm:h-8 sm:w-8" />
+                      <span className="text-xs sm:text-sm">
+                        Kirim ke WhatsApp
+                      </span>
                     </Button>
                   </div>
                 </div>
               </>
             )}
-            {selectedOption === 'qr' && showQR && (
-              <div className="flex flex-col items-center justify-center h-full">
-                <Image src="/placeholder.svg?height=200&width=200" alt="QR Code" width={200} height={200} className="mb-4" />
-                <p className="text-sm sm:text-base text-center mb-4">Scan this QR code to add points to the customer's account</p>
-                <Button 
+            {selectedOption === "qr" && showQR && (
+              <div className="flex h-full flex-col items-center justify-center">
+                <Image
+                  src="/placeholder.svg?height=200&width=200"
+                  alt="Kode QR"
+                  width={200}
+                  height={200}
+                  className="mb-4"
+                />
+                <p className="mb-4 text-center text-sm sm:text-base">
+                  Pindai kode QR ini untuk menambahkan poin ke akun pelanggan
+                </p>
+                <Button
                   onClick={handleFinish}
                   className="bg-secondary text-text hover:bg-tertiary"
                 >
-                  <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-                  Finish
+                  <CheckCircle className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
+                  Selesai
                 </Button>
               </div>
             )}
-            {selectedOption === 'whatsapp' && (
-              <div className="flex flex-col items-center justify-center h-full">
-                <Send className="w-12 h-12 sm:w-16 sm:h-16 text-secondary mb-4" />
-                <h3 className="text-lg sm:text-xl font-semibold mb-4">Send Points via WhatsApp</h3>
-                <Label htmlFor="phone" className="text-sm font-medium mb-2">Customer's Phone Number</Label>
+            {selectedOption === "whatsapp" && (
+              <div className="flex h-full flex-col items-center justify-center">
+                <Send className="mb-4 h-12 w-12 text-secondary sm:h-16 sm:w-16" />
+                <h3 className="mb-4 text-lg font-semibold sm:text-xl">
+                  Kirim Poin via WhatsApp
+                </h3>
+                <Label htmlFor="phone" className="mb-2 text-sm font-medium">
+                  Nomor Telepon Pelanggan
+                </Label>
                 <Input
                   id="phone"
                   type="tel"
-                  placeholder="Enter phone number"
+                  placeholder="Masukkan nomor telepon"
                   value={phoneNumber}
                   onChange={(e) => setPhoneNumber(e.target.value)}
                   className="mb-4"
                 />
                 {!pointsSent ? (
-                  <Button 
+                  <Button
                     onClick={handleSendPoints}
-                    className="bg-secondary text-text hover:bg-tertiary mb-2"
+                    className="mb-2 bg-secondary text-text hover:bg-tertiary"
                     disabled={!phoneNumber}
                   >
-                    <Send className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-                    Send Points
+                    <Send className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
+                    Kirim Poin
                   </Button>
                 ) : (
-                  <div className="text-center mb-4">
-                    <CheckCircle className="w-6 h-6 sm:w-8 sm:h-8 text-green-500 mx-auto mb-2" />
-                    <p className="text-sm sm:text-base text-green-600 font-semibold">Points sent successfully!</p>
+                  <div className="mb-4 text-center">
+                    <CheckCircle className="mx-auto mb-2 h-6 w-6 text-green-500 sm:h-8 sm:w-8" />
+                    <p className="text-sm font-semibold text-green-600 sm:text-base">
+                      Poin berhasil dikirim!
+                    </p>
                   </div>
                 )}
-                <Button 
+                <Button
                   onClick={handleFinish}
                   className="bg-secondary text-text hover:bg-tertiary"
                   disabled={!pointsSent}
                 >
-                  Finish
+                  Selesai
                 </Button>
               </div>
             )}
@@ -383,6 +523,5 @@ export default function CashierPage() {
         </Dialog>
       </div>
     </div>
-  )
+  );
 }
-
