@@ -21,6 +21,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
 // Updated mock data to include reward type
 const rewardExchanges = [
@@ -41,7 +42,37 @@ export default function RewardExchangePage() {
   return (
     <Layout>
       <div className="space-y-6">
-        <h1 className="text-2xl font-bold text-black">Reward Exchange</h1>
+        <Card>
+          <CardHeader>
+            <CardTitle>Reward Exchange</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+              <div className="bg-blue-100 p-4 rounded-lg">
+                <h3 className="text-lg font-semibold text-blue-800">Total Exchanges</h3>
+                <p className="text-3xl font-bold text-blue-600">{rewardExchanges.length}</p>
+              </div>
+              <div className="bg-green-100 p-4 rounded-lg">
+                <h3 className="text-lg font-semibold text-green-800">Waiting Exchanges</h3>
+                <p className="text-3xl font-bold text-green-600">
+                  {rewardExchanges.filter(e => e.status === 'waiting approval').length}
+                </p>
+              </div>
+              <div className="bg-yellow-100 p-4 rounded-lg">
+                <h3 className="text-lg font-semibold text-yellow-800">Processed Exchanges</h3>
+                <p className="text-3xl font-bold text-yellow-600">
+                  {rewardExchanges.filter(e => e.status === 'processed').length}
+                </p>
+              </div>
+              <div className="bg-purple-100 p-4 rounded-lg">
+                <h3 className="text-lg font-semibold text-purple-800">Delivered Exchanged</h3>
+                <p className="text-3xl font-bold text-purple-600">
+                  {rewardExchanges.reduce((sum, e) => sum + e.points, 0).toLocaleString()}
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
 
         {/* Search and Filters */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-4">
@@ -58,12 +89,12 @@ export default function RewardExchangePage() {
               <SelectTrigger id="status-filter" className="w-full sm:w-[180px] border-[#FDDF23]">
                 <SelectValue placeholder="Filter by status" />
               </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All</SelectItem>
-                <SelectItem value="waiting approval">Waiting Approval</SelectItem>
-                <SelectItem value="processed">Processed</SelectItem>
-                <SelectItem value="delivered">Delivered</SelectItem>
-                <SelectItem value="received">Received</SelectItem>
+                <SelectContent className='bg-[#FBFBFB]'>
+                <SelectItem value="all" className='hover:bg-[#FDDF23]/80'>All</SelectItem>
+                <SelectItem value="waiting approval" className='hover:bg-[#FDDF23]/80'>Waiting Approval</SelectItem>
+                <SelectItem value="processed" className='hover:bg-[#FDDF23]/80'>Processed</SelectItem>
+                <SelectItem value="delivered" className='hover:bg-[#FDDF23]/80'>Delivered</SelectItem>
+                <SelectItem value="received" className='hover:bg-[#FDDF23]/80'>Received</SelectItem>
               </SelectContent>
             </Select>
           </div>

@@ -44,7 +44,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       {/* Sidebar for desktop */}
       <aside className="hidden md:flex md:flex-col md:w-64 bg-quaternary shadow-md">
         <div className="p-4 bg-[#FDDF23]">
-          <h1 className="text-2xl font-bold text-black">CMS Dashboard</h1>
+          <h1 className="text-[1.5]xl font-bold text-black">SipNSup Dashboard</h1>
         </div>
         <nav className="flex-1 overflow-y-auto py-4">
           {navItems.map((item) => (

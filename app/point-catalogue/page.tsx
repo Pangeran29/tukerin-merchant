@@ -15,14 +15,15 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import Link from 'next/link'
 
 const pointTypes = [
-  { icon: '🛍️', name: 'Purchase Points', description: 'Earn points for every purchase' },
-  { icon: '🎂', name: 'Birthday Bonus', description: 'Special points on your birthday' },
-  { icon: '👥', name: 'Referral Reward', description: 'Earn points by referring friends' },
-  { icon: '📝', name: 'Review Points', description: 'Get points for leaving reviews' },
-  { icon: '📅', name: 'Check-in Bonus', description: 'Earn points for regular visits' },
-  { icon: '🏆', name: 'Loyalty Milestone', description: 'Bonus points for loyal customers' },
-  { icon: '📱', name: 'App Download', description: 'One-time points for app download' },
-  { icon: '🎉', name: 'Special Event', description: 'Limited-time bonus point events' },
+  { id: 1, icon: '🛍️', name: 'Purchase Points', description: 'Earn points for every Rp. 100,000 purchase' },
+  { id: 2, icon: '🎂', name: 'Birthday Bonus', description: 'Special points on your birthday' },
+  // { id: 3, icon: '👥', name: 'Referral Reward', description: 'Earn points by referring friends' },
+  { id: 4, icon: '📝', name: 'Review Points', description: 'Get points for leaving reviews' },
+  // { id: 5, icon: '📅', name: 'Check-in Bonus', description: 'Earn points for regular visits' },
+  // { id: 6, icon: '🏆', name: 'Loyalty Milestone', description: 'Bonus points for loyal customers' },
+  // { id: 7, icon: '📱', name: 'App Download', description: 'One-time points for app download' },
+  { id: 8, icon: '🎉', name: 'Special Event', description: 'Limited-time bonus point events' },
+  { id: 9, icon: '🍜', name: 'Special Menu', description: 'Try our newest korean noodle to get more points' },
 ]
 
 export default function PointCataloguePage() {
@@ -70,25 +71,22 @@ export default function PointCataloguePage() {
             <div className="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0 sm:space-x-4">
               <div className="relative w-full sm:w-96">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                <Input 
-                  placeholder="Search point types" 
+                <Input
+                  placeholder="Search point types"
                   className="pl-10 bg-white border-gray-300"
                 />
               </div>
               <div className="flex space-x-2">
                 <Select>
                   <SelectTrigger className="w-[150px] border-gray-300">
-                    <SelectValue placeholder="Status" />
+                    <SelectValue placeholder="Point Type" />
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Status</SelectItem>
-                    <SelectItem value="active">Active</SelectItem>
-                    <SelectItem value="inactive">Inactive</SelectItem>
+                  <SelectContent className='bg-[#FBFBFB]'>
+                    <SelectItem value="all" className='hover:bg-[#FDDF23]/80'>By Price</SelectItem>
+                    <SelectItem value="active" className='hover:bg-[#FDDF23]/80'>By Menu Item</SelectItem>
+                    <SelectItem value="inactive" className='hover:bg-[#FDDF23]/80'>By Customer</SelectItem>
                   </SelectContent>
                 </Select>
-                <Button variant="outline" className="border-gray-300">
-                  <Filter className="w-4 h-4 mr-2" /> More Filters
-                </Button>
               </div>
             </div>
           </CardContent>
@@ -97,16 +95,19 @@ export default function PointCataloguePage() {
         {/* Point Catalogue Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {/* Point Type Cards */}
-          {pointTypes.map((pointType, index) => (
-            <Card key={index} className="overflow-hidden hover:shadow-lg transition-shadow duration-200">
+          {pointTypes.map((pointType) => (
+            <Card key={pointType.id} className="overflow-hidden hover:shadow-lg transition-shadow duration-200">
               <CardContent className="p-6">
                 <div className="text-4xl mb-4">{pointType.icon}</div>
                 <h3 className="font-semibold text-lg text-gray-900 mb-2">{pointType.name}</h3>
                 <p className="text-sm text-gray-600 mb-4">{pointType.description}</p>
                 <div className="flex flex-col justify-between items-start">
                   <span className="text-sm font-medium text-gray-500">Earn up to</span>
-                  <span className="text-xl font-bold text-gray-600">{(index + 1) * 10} pts</span>
+                  <span className="text-xl font-bold text-gray-600">{pointType.id * 10} pts</span>
                 </div>
+                <Link href={`/point-catalogue/${pointType.id}`}>
+                  <Button variant="outline" size="sm" className="w-full mt-4">View Details</Button>
+                </Link>
               </CardContent>
             </Card>
           ))}

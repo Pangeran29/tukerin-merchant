@@ -72,9 +72,6 @@ export default function CustomerPage() {
       <div className="space-y-6">
         <div className="flex justify-between items-center">
           <h1 className="text-3xl font-bold text-gray-900">Customer Management</h1>
-          <Button className="bg-[#FDDF23] text-black hover:bg-[#FDDF23]/80">
-            <UserPlus className="w-5 h-5 mr-2" /> Add New Customer
-          </Button>
         </div>
 
         <Card>
@@ -125,15 +122,12 @@ export default function CustomerPage() {
                   <SelectTrigger className="w-[150px] border-gray-300">
                     <SelectValue placeholder="Status" />
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Status</SelectItem>
-                    <SelectItem value="active">Active</SelectItem>
-                    <SelectItem value="inactive">Inactive</SelectItem>
+                <SelectContent className='bg-[#FBFBFB]'>
+                    <SelectItem value="all" className='hover:bg-[#FDDF23]/80'>All Status</SelectItem>
+                    <SelectItem value="active" className='hover:bg-[#FDDF23]/80'>Active</SelectItem>
+                    <SelectItem value="inactive" className='hover:bg-[#FDDF23]/80'>Inactive</SelectItem>
                   </SelectContent>
                 </Select>
-                <Button variant="outline" className="border-gray-300">
-                  <Filter className="w-4 h-4 mr-2" /> More Filters
-                </Button>
               </div>
             </div>
           </CardContent>
