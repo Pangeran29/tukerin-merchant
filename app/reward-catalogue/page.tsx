@@ -42,37 +42,37 @@ export default function RewardCataloguePage() {
               </div>
               
               <Select>
-                <SelectTrigger className="w-full border-gray-300">
+                <SelectTrigger className="w-full border-gray-300 bg-white">
                   <SelectValue placeholder="Reward Type" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className='bg-[#FBFBFB]'>
                   {rewardTypes.map((type) => (
-                    <SelectItem key={type} value={type.toLowerCase()}>{type}</SelectItem>
+                    <SelectItem key={type} value={type.toLowerCase()} className='hover:bg-[#FDDF23]/80'>{type}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
 
               <Select>
-                <SelectTrigger className="w-full border-gray-300">
+                <SelectTrigger className="w-full border-gray-300 bg-white">
                   <SelectValue placeholder="Status" />
                 </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Status</SelectItem>
-                  <SelectItem value="active">Active</SelectItem>
-                  <SelectItem value="inactive">Inactive</SelectItem>
-                  <SelectItem value="draft">Draft</SelectItem>
+                <SelectContent className='bg-[#FBFBFB]'>
+                  <SelectItem value="all" className='hover:bg-[#FDDF23]/80'>All Status</SelectItem>
+                  <SelectItem value="active" className='hover:bg-[#FDDF23]/80'>Active</SelectItem>
+                  <SelectItem value="inactive" className='hover:bg-[#FDDF23]/80'>Inactive</SelectItem>
+                  <SelectItem value="draft" className='hover:bg-[#FDDF23]/80'>Draft</SelectItem>
                 </SelectContent>
               </Select>
 
               <Select>
-                <SelectTrigger className="w-full border-gray-300">
+                <SelectTrigger className="w-full border-gray-300 bg-white">
                   <SelectValue placeholder="Sort By" />
                 </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="newest">Newest</SelectItem>
-                  <SelectItem value="oldest">Oldest</SelectItem>
-                  <SelectItem value="points-high">Highest Points</SelectItem>
-                  <SelectItem value="points-low">Lowest Points</SelectItem>
+                <SelectContent className='bg-[#FBFBFB]'>
+                  <SelectItem value="newest" className='hover:bg-[#FDDF23]/80'>Newest</SelectItem>
+                  <SelectItem value="oldest" className='hover:bg-[#FDDF23]/80'>Oldest</SelectItem>
+                  <SelectItem value="points-high" className='hover:bg-[#FDDF23]/80'>Highest Points</SelectItem>
+                  <SelectItem value="points-low" className='hover:bg-[#FDDF23]/80'>Lowest Points</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -92,11 +92,11 @@ export default function RewardCataloguePage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {Array.from({ length: 7 }).map((_, index) => (
             <Card key={index} className="overflow-hidden hover:shadow-lg transition-shadow duration-200">
-              <div className="aspect-square relative">
+              <div className="w-full relative">
                 <img
-                  src={`/placeholder.svg?text=Reward ${index + 1}&bg=FDDF23&fg=000000`}
+                  src={`tori\ kara.jpg`}
                   alt={`Reward ${index + 1}`}
-                  className="w-full h-full object-cover"
+                  className="w-full max-h-[15rem]"
                 />
                 <div className="absolute top-2 right-2 bg-black text-white text-xs font-bold px-2 py-1 rounded">
                   {['Voucher', 'Physical', 'Experience'][index % 3]}

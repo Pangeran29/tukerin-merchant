@@ -138,10 +138,6 @@ export default function AddRewardPage() {
                         <RadioGroupItem value="voucher" id="voucher" />
                         <Label htmlFor="voucher">Voucher</Label>
                       </div>
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="experience" id="experience" />
-                        <Label htmlFor="experience">Experience</Label>
-                      </div>
                     </RadioGroup>
                   </div>
 

@@ -104,18 +104,16 @@ export default function PointExchangePage() {
               </div>
               <div className="flex space-x-2">
                 <Select>
-                  <SelectTrigger className="w-[150px] border-gray-300">
-                    <SelectValue placeholder="Status" />
+                  <SelectTrigger className="w-[150px] border-gray-300 bg-white">
+                    <SelectValue placeholder="Status"/>
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Status</SelectItem>
-                    <SelectItem value="completed">Completed</SelectItem>
-                    <SelectItem value="pending">Pending</SelectItem>
+                  <SelectContent className='bg-[#FBFBFB]'>
+                    <SelectItem value="all" className='hover:bg-[#FDDF23]/80'>All Status</SelectItem>
+                    <SelectItem value="completed" className='hover:bg-[#FDDF23]/80'>Completed</SelectItem>
+                    <SelectItem value="pending" className='hover:bg-[#FDDF23]/80'>Pending</SelectItem>
                   </SelectContent>
                 </Select>
-                <Button variant="outline" className="border-gray-300">
-                  <Filter className="w-4 h-4 mr-2" /> More Filters
-                </Button>
+             
               </div>
             </div>
           </CardContent>

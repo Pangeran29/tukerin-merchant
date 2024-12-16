@@ -69,22 +69,6 @@ export default function AddPointPage() {
                     <Label htmlFor="description">Description</Label>
                     <Textarea id="description" className="bg-white border-gray-300" required />
                   </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="icon">Point Icon</Label>
-                    <Select>
-                      <SelectTrigger className="w-full border-gray-300">
-                        <SelectValue placeholder="Select an icon" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="coins"><Coins className="inline-block mr-2" /> Coins</SelectItem>
-                        <SelectItem value="shopping"><ShoppingBag className="inline-block mr-2" /> Shopping Bag</SelectItem>
-                        <SelectItem value="users"><Users className="inline-block mr-2" /> Users</SelectItem>
-                        <SelectItem value="star"><Star className="inline-block mr-2" /> Star</SelectItem>
-                        <SelectItem value="coffee"><Coffee className="inline-block mr-2" /> Coffee</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
                 </CardContent>
               </Card>
             </TabsContent>
@@ -107,7 +91,7 @@ export default function AddPointPage() {
                       </div>
                       <div className="flex items-center space-x-2">
                         <RadioGroupItem value="fixed" id="fixed" />
-                        <Label htmlFor="fixed">Fixed Amount</Label>
+                        <Label htmlFor="fixed">By Customer</Label>
                       </div>
                     </RadioGroup>
                   </div>
